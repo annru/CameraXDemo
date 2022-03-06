@@ -1,22 +1,18 @@
 package com.test.cameraxdemo
 
 import android.Manifest
-import android.annotation.SuppressLint
-import android.app.ActivityManager
 import android.content.pm.PackageManager
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.util.Size
 import android.widget.Button
+import androidx.appcompat.app.AppCompatActivity
 import androidx.camera.core.*
 import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.camera.view.PreviewView
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
-import androidx.lifecycle.LifecycleOwner
 import java.io.File
-import java.util.logging.Logger
 
 class MainActivity : AppCompatActivity() {
     private lateinit var previewView: PreviewView
