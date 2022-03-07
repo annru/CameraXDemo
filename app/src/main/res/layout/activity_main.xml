@@ -14,6 +14,15 @@
         app:layout_constraintBottom_toTopOf="@id/takePhotoBtn"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/imageView"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:visibility="invisible"
+        android:scaleType="centerCrop"
+        app:layout_constraintBottom_toTopOf="@id/takePhotoBtn"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <Button
         android:id="@+id/takePhotoBtn"
         android:layout_width="wrap_content"

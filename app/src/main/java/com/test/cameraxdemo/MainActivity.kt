@@ -5,13 +5,17 @@ import android.content.pm.PackageManager
 import android.os.Bundle
 import android.util.Log
 import android.util.Size
+import android.view.View
 import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.AppCompatImageView
 import androidx.camera.core.*
 import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.camera.view.PreviewView
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.core.widget.ImageViewCompat
+import com.bumptech.glide.Glide
 import java.io.File
 
 class MainActivity : AppCompatActivity() {
@@ -22,12 +26,15 @@ class MainActivity : AppCompatActivity() {
     private lateinit var cameraProvider: ProcessCameraProvider
     private lateinit var savePath: String
 
+    private lateinit var imageView: AppCompatImageView
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         savePath = filesDir.absolutePath + System.currentTimeMillis() + ".jpg"
 
         previewView = findViewById(R.id.previewView)
+        imageView = findViewById(R.id.imageView)
 
         checkPermission()
 
@@ -43,6 +50,10 @@ class MainActivity : AppCompatActivity() {
                 object : ImageCapture.OnImageSavedCallback {
                     override fun onImageSaved(outputFileResults: ImageCapture.OutputFileResults) {
                         Log.i("tag", "保存路径：${outputFileResults.savedUri.toString()}")
+                        imageView.visibility = View.VISIBLE
+                        imageView.post {
+                            Glide.with(imageView).load(outputFileResults.savedUri).into(imageView)
+                        }
                     }
 
 
@@ -93,7 +104,7 @@ class MainActivity : AppCompatActivity() {
             val cameraSelector =
                 CameraSelector.Builder().requireLensFacing(CameraSelector.LENS_FACING_FRONT).build()
             val preview = Preview.Builder().build()
-            camera = it.bindToLifecycle(this, cameraSelector, imageCapture, preview)
+            camera = it.bindToLifecycle(this, cameraSelector, imageCapture, imageAnalysis, preview)
 
             preview.setSurfaceProvider(previewView.surfaceProvider)
         }
